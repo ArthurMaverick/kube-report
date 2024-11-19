@@ -1,4 +1,4 @@
-package kubernetes
+package client
 
 import (
 	"flag"
@@ -7,10 +7,12 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
+	metricsclient "k8s.io/metrics/pkg/client/clientset/versioned"
 )
 
 type K8sClient struct {
-	client *kubernetes.Clientset
+	coreClient   *kubernetes.Clientset
+	metrisClient *metricsclient.Clientset
 }
 
 func NewK8sClient() *K8sClient {
@@ -27,12 +29,18 @@ func NewK8sClient() *K8sClient {
 		panic(err.Error())
 	}
 
-	clientset, err := kubernetes.NewForConfig(config)
+	coreClientSet, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	metricsClientSet, err := metricsclient.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	return &K8sClient{
-		client: clientset,
+		coreClient:   coreClientSet,
+		metrisClient: metricsClientSet,
 	}
 }

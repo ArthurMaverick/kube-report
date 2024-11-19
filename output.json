@@ -1,0 +1,34 @@
+[
+    {
+        "namespace": "kube-system",
+        "name": "coredns",
+        "replicas": 2,
+        "containers": [
+            {
+                "image": "registry.k8s.io/coredns/coredns:v1.11.3",
+                "cpu_request": "100m",
+                "cpu_limit": "0",
+                "mem_request": "70Mi",
+                "mem_limit": "170Mi",
+                "current_cpu": "",
+                "current_mem": ""
+            }
+        ]
+    },
+    {
+        "namespace": "local-path-storage",
+        "name": "local-path-provisioner",
+        "replicas": 1,
+        "containers": [
+            {
+                "image": "docker.io/kindest/local-path-provisioner:v20240813-c6f155d6",
+                "cpu_request": "0",
+                "cpu_limit": "0",
+                "mem_request": "0",
+                "mem_limit": "0",
+                "current_cpu": "",
+                "current_mem": ""
+            }
+        ]
+    }
+]
